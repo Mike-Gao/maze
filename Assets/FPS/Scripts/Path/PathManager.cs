@@ -10,6 +10,7 @@ public class PathManager : MonoBehaviour
 
     public GameObject pathTile;
     public GameObject ammo;
+    public GameObject MazeTile;
     public static int tileScale = 3; //default tile size 3
     public List<Vector2Int> allpoints = new List<Vector2Int>();
     // Start is called before the first frame update
@@ -17,6 +18,7 @@ public class PathManager : MonoBehaviour
     {
         GeneratePath();
         GenerateAmmo();
+        GenerateMaze();
     }
 
 
@@ -28,12 +30,20 @@ public class PathManager : MonoBehaviour
 
     void SpawnFloor(int x, int y)
     {
+        // Spawn a tile
         Instantiate(pathTile, new Vector3(x, 0.1f, y), Quaternion.identity);
     }
 
     void SpawnAmmo(int x, int y)
     {
+        // Spawn ammo on the generated path
         Instantiate(ammo, new Vector3(x, 0.1f, y), Quaternion.identity);
+    }
+
+    void SpawnRoom(int x, int y)
+    {
+        // Spawn ammo on the generated path
+        Instantiate(MazeTile, new Vector3(x, 0.1f, y), Quaternion.identity);
     }
 
     void GenerateAmmo()
@@ -87,15 +97,13 @@ public class PathManager : MonoBehaviour
         visited.Add(new Vector2Int(x, y));
         SpawnFloor(x, y);
         int i = Random.Range(0, GetAvailableDirection(x, y, visited).Count);
+        // Generate path leading up to the maze entrance
         while (x != 7 * tileScale || y != 7 * tileScale)
         {
 
             switch (GetAvailableDirection(x, y, visited)[i])
             {
                 case 0:
-                    /*SpawnFloor(x, y + 3 * tileScale);
-                    SpawnFloor(x, y + 2 * tileScale);
-                    SpawnFloor(x, y + 1 * tileScale);*/
                     for (int j = 1; j < 4; ++j)
                     {
                         SpawnFloor(x, y + j * tileScale);
@@ -105,9 +113,6 @@ public class PathManager : MonoBehaviour
                     visited.Add(new Vector2Int(x, y));
                     break;
                 case 1:
-                    /*SpawnFloor(x, y - 3 * tileScale);
-                    SpawnFloor(x, y - 2 * tileScale);
-                    SpawnFloor(x, y - 1 * tileScale);*/
                     for (int j = 1; j < 4; ++j)
                     {
                         SpawnFloor(x, y - j * tileScale);
@@ -117,9 +122,6 @@ public class PathManager : MonoBehaviour
                     visited.Add(new Vector2Int(x, y));
                     break;
                 case 2:
-                    /*SpawnFloor(x - 3 * tileScale, y);
-                    SpawnFloor(x - 2 * tileScale, y);
-                    SpawnFloor(x - 1 * tileScale, y);*/
                     for (int j = 1; j < 4; ++j)
                     {
                         SpawnFloor(x - j * tileScale, y);
@@ -129,9 +131,6 @@ public class PathManager : MonoBehaviour
                     visited.Add(new Vector2Int(x, y));
                     break;
                 case 3:
-                    /*SpawnFloor(x + 3 * tileScale, y);
-                    SpawnFloor(x + 2 * tileScale, y);
-                    SpawnFloor(x + 1 * tileScale, y);*/
                     for (int j = 1; j < 4; ++j)
                     {
                         SpawnFloor(x + j * tileScale, y);
@@ -143,6 +142,19 @@ public class PathManager : MonoBehaviour
             }    
             i = Random.Range(0, GetAvailableDirection(x, y, visited).Count);
         }
+
+    }
+
+    void GenerateMaze()
+    {
+        for (int i = 0; i < 5; ++i)
+        {
+            for (int j = 0; j < 5; ++j)
+            {
+                SpawnRoom(14 + i * 10, -1 + j * 10);
+            }
+        }
+
 
     }
 

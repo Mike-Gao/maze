@@ -88,8 +88,6 @@
     <Compile Include="Assets\FPS\Scripts\IgnoreHeatMap.cs" />
     <Compile Include="Assets\FPS\Scripts\IgnoreHitDetection.cs" />
     <Compile Include="Assets\FPS\Scripts\InGameMenuManager.cs" />
-    <Compile Include="Assets\FPS\Scripts\Jetpack.cs" />
-    <Compile Include="Assets\FPS\Scripts\JetpackPickup.cs" />
     <Compile Include="Assets\FPS\Scripts\MeshCombineUtility.cs" />
     <Compile Include="Assets\FPS\Scripts\MeshCombiner.cs" />
     <Compile Include="Assets\FPS\Scripts\MinMaxParameters.cs" />
@@ -100,6 +98,7 @@
     <Compile Include="Assets\FPS\Scripts\ObjectivePickupItem.cs" />
     <Compile Include="Assets\FPS\Scripts\ObjectiveReachPoint.cs" />
     <Compile Include="Assets\FPS\Scripts\OverheatBehavior.cs" />
+    <Compile Include="Assets\FPS\Scripts\Path\MazeTile.cs" />
     <Compile Include="Assets\FPS\Scripts\Path\PathManager.cs" />
     <Compile Include="Assets\FPS\Scripts\PatrolPath.cs" />
     <Compile Include="Assets\FPS\Scripts\Pickup.cs" />
@@ -126,7 +125,6 @@
     <Compile Include="Assets\FPS\Scripts\UI\EnemyCounter.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\FeedbackFlashHUD.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\FillBarColorChange.cs" />
-    <Compile Include="Assets\FPS\Scripts\UI\JetpackCounter.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\LoadSceneButton.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\MenuNavigation.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\NotificationHUDManager.cs" />

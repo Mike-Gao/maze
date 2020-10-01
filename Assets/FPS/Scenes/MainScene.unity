@@ -121,7 +121,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: ee226dfcd3485bd488d7c03e45b713ca, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 47130d6a242f726439050c96d63d7aa6, type: 2}
 --- !u!1 &30482406
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,7 +1567,7 @@ PrefabInstance:
     - target: {fileID: 5963937743390997973, guid: d5920ec2e9589fa49af231931214586b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.6
+      value: 0.077
       objectReference: {fileID: 0}
     - target: {fileID: 5963937743390997973, guid: d5920ec2e9589fa49af231931214586b,
         type: 3}
@@ -1577,7 +1577,7 @@ PrefabInstance:
     - target: {fileID: 5963937743390997973, guid: d5920ec2e9589fa49af231931214586b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 21.5
+      value: 20.99
       objectReference: {fileID: 0}
     - target: {fileID: 5963937743390997973, guid: d5920ec2e9589fa49af231931214586b,
         type: 3}
@@ -2674,6 +2674,12 @@ PrefabInstance:
       propertyPath: ammo
       value: 
       objectReference: {fileID: 2620131183356007192, guid: d40ae884302b6684a8b3b6f3d55a71ba,
+        type: 3}
+    - target: {fileID: 1567821086013902854, guid: c996b53e9f849234393d1e90f68d1679,
+        type: 3}
+      propertyPath: MazeTile
+      value: 
+      objectReference: {fileID: 1260790625034034525, guid: 17494cec3575bbd43928fdeedf9b7323,
         type: 3}
     - target: {fileID: 1730079767995651685, guid: c996b53e9f849234393d1e90f68d1679,
         type: 3}
