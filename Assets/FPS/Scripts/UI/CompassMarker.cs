@@ -20,25 +20,12 @@ public class CompassMarker : MonoBehaviour
     [Tooltip("Text content for the direction")]
     public TMPro.TextMeshProUGUI textContent;
 
-    EnemyController m_EnemyController;
 
     public void Initialize(CompassElement compassElement, string textDirection)
     {
         if (isDirection && textContent)
         {
             textContent.text = textDirection;
-        }
-        else
-        {
-            m_EnemyController = compassElement.transform.GetComponent<EnemyController>();
-
-            if (m_EnemyController)
-            {
-                m_EnemyController.onDetectedTarget += DetectTarget;
-                m_EnemyController.onLostTarget += LostTarget;
-
-                LostTarget();
-            }
         }
     }
 

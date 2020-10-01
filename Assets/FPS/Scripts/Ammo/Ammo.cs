@@ -1,0 +1,37 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Ammo : MonoBehaviour
+{
+    // Start is called before the first frame update
+    public Text AmmoCount;
+    public int CurrentAmmo { get; set; }
+    void Start()
+    {
+        CurrentAmmo = 0;
+        AmmoCount.text = $"{CurrentAmmo}";
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void AddAmmo()
+    {
+        CurrentAmmo++;
+        AmmoCount.text = $"{CurrentAmmo}";
+    }
+
+    public bool UseAmmo()
+    {
+        if (CurrentAmmo <= 0) return false;
+        CurrentAmmo--;
+        AmmoCount.text = $"{CurrentAmmo}";
+        return true;
+    }
+}

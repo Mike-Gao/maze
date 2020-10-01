@@ -37,8 +37,6 @@ public class ProjectileStandard : MonoBehaviour
     [Header("Damage")]
     [Tooltip("Damage of the projectile")]
     public float damage = 40f;
-    [Tooltip("Area of damage. Keep empty if you don<t want area damage")]
-    public DamageArea areaOfDamage;
 
     [Header("Debug")]
     [Tooltip("Color of the projectile radius debug view")]
@@ -186,8 +184,8 @@ public class ProjectileStandard : MonoBehaviour
             return false;
         }
 
-        // ignore hits with triggers that don't have a Damageable component
-        if(hit.collider.isTrigger && hit.collider.GetComponent<Damageable>() == null)
+        // ignore hits with triggers that don't have a Destructable component
+        if(hit.collider.isTrigger && hit.collider.GetComponent<Destructable>() == null)
         {
             return false;
         }
@@ -204,20 +202,11 @@ public class ProjectileStandard : MonoBehaviour
     void OnHit(Vector3 point, Vector3 normal, Collider collider)
     { 
         // damage
-        if (areaOfDamage)
+		Destructable dest = collider.GetComponent<Destructable>();
+        if (dest)
         {
-            // area damage
-            areaOfDamage.InflictDamageInArea(damage, point, hittableLayers, k_TriggerInteraction, m_ProjectileBase.owner);
-        }
-        else
-        {
-            // point damage
-            Damageable damageable = collider.GetComponent<Damageable>();
-            if (damageable)
-            {
-                damageable.InflictDamage(damage, false, m_ProjectileBase.owner);
-            }
-        }
+            dest.OnDie();
+		}
 
         // impact vfx
         if (impactVFX)

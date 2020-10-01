@@ -703,10 +703,6 @@
       <Project>{57ADB0FB-59F8-E34F-DBF4-54C3A7948D80}</Project>
       <Name>NavMeshComponentsEditor</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.2DPlatformer.Tutorials.csproj">
-      <Project>{FDD9FD26-3686-27BB-782F-B0AF3B23FCF9}</Project>
-      <Name>Unity.2DPlatformer.Tutorials</Name>
-    </ProjectReference>
     <ProjectReference Include="NavMeshComponents.csproj">
       <Project>{2C9D6473-5F48-B465-F834-1DF45DB3B632}</Project>
       <Name>NavMeshComponents</Name>

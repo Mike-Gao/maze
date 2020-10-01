@@ -59,7 +59,7 @@ public class PlayerWeaponsManager : MonoBehaviour
     public LayerMask FPSWeaponLayer;
 
     public bool isAiming { get; private set; }
-    public bool isPointingAtEnemy { get; private set; }
+    public bool isPointingAtEnemy = false;
     public int activeWeaponIndex { get; private set; }
 
     public UnityAction<WeaponController> onSwitchedToWeapon;
@@ -144,19 +144,6 @@ public class PlayerWeaponsManager : MonoBehaviour
                 {
                     if (GetWeaponAtSlotIndex(switchWeaponInput - 1) != null)
                         SwitchToWeaponIndex(switchWeaponInput - 1);
-                }
-            }
-        }
-
-        // Pointing at enemy handling
-        isPointingAtEnemy = false;
-        if (activeWeapon)
-        {
-            if(Physics.Raycast(weaponCamera.transform.position, weaponCamera.transform.forward, out RaycastHit hit, 1000, -1, QueryTriggerInteraction.Ignore))
-            {
-                if(hit.collider.GetComponentInParent<EnemyController>())
-                {
-                    isPointingAtEnemy = true;
                 }
             }
         }

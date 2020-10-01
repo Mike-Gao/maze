@@ -102,7 +102,6 @@ public class PlayerCharacterController : MonoBehaviour
         }
     }
         
-    Health m_Health;
     PlayerInputHandler m_InputHandler;
     CharacterController m_Controller;
     PlayerWeaponsManager m_WeaponsManager;
@@ -130,15 +129,11 @@ public class PlayerCharacterController : MonoBehaviour
         m_WeaponsManager = GetComponent<PlayerWeaponsManager>();
         DebugUtility.HandleErrorIfNullGetComponent<PlayerWeaponsManager, PlayerCharacterController>(m_WeaponsManager, this, gameObject);
 
-        m_Health = GetComponent<Health>();
-        DebugUtility.HandleErrorIfNullGetComponent<Health, PlayerCharacterController>(m_Health, this, gameObject);
-
         m_Actor = GetComponent<Actor>();
         DebugUtility.HandleErrorIfNullGetComponent<Actor, PlayerCharacterController>(m_Actor, this, gameObject);
 
         m_Controller.enableOverlapRecovery = true;
 
-        m_Health.onDie += OnDie;
 
         // force the crouch state to false when starting
         SetCrouchingState(false, true);
@@ -147,12 +142,10 @@ public class PlayerCharacterController : MonoBehaviour
 
     void Update()
     {
-        // check for Y kill
-        if(!isDead && transform.position.y < killHeight)
+        if (!isDead && transform.position.y < killHeight)
         {
-            m_Health.Kill();
+            OnDie();
         }
-
         hasJumpedThisFrame = false;
 
         bool wasGrounded = isGrounded;
@@ -164,19 +157,7 @@ public class PlayerCharacterController : MonoBehaviour
             // Fall damage
             float fallSpeed = -Mathf.Min(characterVelocity.y, m_LatestImpactSpeed.y);
             float fallSpeedRatio = (fallSpeed - minSpeedForFallDamage) / (maxSpeedForFallDamage - minSpeedForFallDamage);
-            if (recievesFallDamage && fallSpeedRatio > 0f)
-            {
-                float dmgFromFall = Mathf.Lerp(fallDamageAtMinSpeed, fallDamageAtMaxSpeed, fallSpeedRatio);
-                m_Health.TakeDamage(dmgFromFall, null);
-
-                // fall damage SFX
-                audioSource.PlayOneShot(fallDamageSFX);
-            }
-            else
-            {
-                // land SFX
-                audioSource.PlayOneShot(landSFX);
-            }
+            audioSource.PlayOneShot(landSFX);
         }
 
         // crouching
@@ -196,6 +177,8 @@ public class PlayerCharacterController : MonoBehaviour
 
         // Tell the weapons manager to switch to a non-existing weapon in order to lower the weapon
         m_WeaponsManager.SwitchToWeaponIndex(-1, true);
+        var gm = FindObjectOfType<GameFlowManager>();
+        gm.EndGame(false);
     }
 
     void GroundCheck()

@@ -65,26 +65,20 @@
   <ItemGroup>
     <Compile Include="Assets\FPS\Scripts\Actor.cs" />
     <Compile Include="Assets\FPS\Scripts\ActorsManager.cs" />
+    <Compile Include="Assets\FPS\Scripts\Ammo\Ammo.cs" />
+    <Compile Include="Assets\FPS\Scripts\Ammo\AmmoPickup.cs" />
     <Compile Include="Assets\FPS\Scripts\AudioManager.cs" />
     <Compile Include="Assets\FPS\Scripts\AudioUtility.cs" />
     <Compile Include="Assets\FPS\Scripts\ChargedProjectileEffectsHandler.cs" />
     <Compile Include="Assets\FPS\Scripts\ChargedWeaponEffectsHandler.cs" />
     <Compile Include="Assets\FPS\Scripts\ConstantRotation.cs" />
-    <Compile Include="Assets\FPS\Scripts\DamageArea.cs" />
-    <Compile Include="Assets\FPS\Scripts\Damageable.cs" />
     <Compile Include="Assets\FPS\Scripts\DebugUtility.cs" />
     <Compile Include="Assets\FPS\Scripts\Destructable.cs" />
     <Compile Include="Assets\FPS\Scripts\DetectionModule.cs" />
-    <Compile Include="Assets\FPS\Scripts\EnemyController.cs" />
-    <Compile Include="Assets\FPS\Scripts\EnemyManager.cs" />
-    <Compile Include="Assets\FPS\Scripts\EnemyMobile.cs" />
-    <Compile Include="Assets\FPS\Scripts\EnemyTurret.cs" />
     <Compile Include="Assets\FPS\Scripts\FollowPlayer.cs" />
     <Compile Include="Assets\FPS\Scripts\FramerateCounter.cs" />
     <Compile Include="Assets\FPS\Scripts\GameConstants.cs" />
     <Compile Include="Assets\FPS\Scripts\GameFlowManager.cs" />
-    <Compile Include="Assets\FPS\Scripts\Health.cs" />
-    <Compile Include="Assets\FPS\Scripts\HealthPickup.cs" />
     <Compile Include="Assets\FPS\Scripts\IgnoreHeatMap.cs" />
     <Compile Include="Assets\FPS\Scripts\IgnoreHitDetection.cs" />
     <Compile Include="Assets\FPS\Scripts\InGameMenuManager.cs" />
@@ -93,14 +87,12 @@
     <Compile Include="Assets\FPS\Scripts\MinMaxParameters.cs" />
     <Compile Include="Assets\FPS\Scripts\NavigationModule.cs" />
     <Compile Include="Assets\FPS\Scripts\Objective.cs" />
-    <Compile Include="Assets\FPS\Scripts\ObjectiveKillEnemies.cs" />
     <Compile Include="Assets\FPS\Scripts\ObjectiveManager.cs" />
     <Compile Include="Assets\FPS\Scripts\ObjectivePickupItem.cs" />
     <Compile Include="Assets\FPS\Scripts\ObjectiveReachPoint.cs" />
     <Compile Include="Assets\FPS\Scripts\OverheatBehavior.cs" />
     <Compile Include="Assets\FPS\Scripts\Path\MazeTile.cs" />
     <Compile Include="Assets\FPS\Scripts\Path\PathManager.cs" />
-    <Compile Include="Assets\FPS\Scripts\PatrolPath.cs" />
     <Compile Include="Assets\FPS\Scripts\Pickup.cs" />
     <Compile Include="Assets\FPS\Scripts\PlayerCharacterController.cs" />
     <Compile Include="Assets\FPS\Scripts\PlayerInputHandler.cs" />
@@ -112,18 +104,14 @@
     <Compile Include="Assets\FPS\Scripts\ProjectileChargeParameters.cs" />
     <Compile Include="Assets\FPS\Scripts\ProjectileStandard.cs" />
     <Compile Include="Assets\FPS\Scripts\TakeScreenshot.cs" />
-    <Compile Include="Assets\FPS\Scripts\TeleportPlayer.cs" />
     <Compile Include="Assets\FPS\Scripts\TemplateObject.cs" />
     <Compile Include="Assets\FPS\Scripts\TimedSelfDestruct.cs" />
-    <Compile Include="Assets\FPS\Scripts\UI\AmmoCounter.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\Compass.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\CompassElement.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\CompassMarker.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\CrosshairManager.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\DisplayMessage.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\DisplayMessageManager.cs" />
-    <Compile Include="Assets\FPS\Scripts\UI\EnemyCounter.cs" />
-    <Compile Include="Assets\FPS\Scripts\UI\FeedbackFlashHUD.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\FillBarColorChange.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\LoadSceneButton.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\MenuNavigation.cs" />
@@ -131,11 +119,9 @@
     <Compile Include="Assets\FPS\Scripts\UI\NotificationToast.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\ObjectiveHUDManger.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\ObjectiveToast.cs" />
-    <Compile Include="Assets\FPS\Scripts\UI\PlayerHealthBar.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\StanceHUD.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\ToggleGameObjectButton.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\WeaponHUDManager.cs" />
-    <Compile Include="Assets\FPS\Scripts\UI\WorldspaceHealthBar.cs" />
     <Compile Include="Assets\FPS\Scripts\WeaponController.cs" />
     <Compile Include="Assets\FPS\Scripts\WeaponFuelCellHandler.cs" />
     <Compile Include="Assets\FPS\Scripts\WeaponPickup.cs" />
@@ -767,10 +753,6 @@
     <ProjectReference Include="NavMeshComponentsEditor.csproj">
       <Project>{57ADB0FB-59F8-E34F-DBF4-54C3A7948D80}</Project>
       <Name>NavMeshComponentsEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.2DPlatformer.Tutorials.csproj">
-      <Project>{FDD9FD26-3686-27BB-782F-B0AF3B23FCF9}</Project>
-      <Name>Unity.2DPlatformer.Tutorials</Name>
     </ProjectReference>
     <ProjectReference Include="NavMeshComponents.csproj">
       <Project>{2C9D6473-5F48-B465-F834-1DF45DB3B632}</Project>

@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshComponentsEditor", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{448CDE55-5DE5-A3FB-BC8D-6165D4F16280}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.2DPlatformer.Tutorials", "Unity.2DPlatformer.Tutorials.csproj", "{FDD9FD26-3686-27BB-782F-B0AF3B23FCF9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,10 +31,6 @@ Global
 		{448CDE55-5DE5-A3FB-BC8D-6165D4F16280}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{448CDE55-5DE5-A3FB-BC8D-6165D4F16280}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{448CDE55-5DE5-A3FB-BC8D-6165D4F16280}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FDD9FD26-3686-27BB-782F-B0AF3B23FCF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FDD9FD26-3686-27BB-782F-B0AF3B23FCF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FDD9FD26-3686-27BB-782F-B0AF3B23FCF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FDD9FD26-3686-27BB-782F-B0AF3B23FCF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

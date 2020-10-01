@@ -21,16 +21,12 @@ public class InGameMenuManager : MonoBehaviour
     public GameObject controlImage;
 
     PlayerInputHandler m_PlayerInputsHandler;
-    Health m_PlayerHealth;
     FramerateCounter m_FramerateCounter;
 
     void Start()
     {
         m_PlayerInputsHandler = FindObjectOfType<PlayerInputHandler>();
         DebugUtility.HandleErrorIfNullFindObject<PlayerInputHandler, InGameMenuManager>(m_PlayerInputsHandler, this);
-
-        m_PlayerHealth = m_PlayerInputsHandler.GetComponent<Health>();
-        DebugUtility.HandleErrorIfNullGetComponent<Health, InGameMenuManager>(m_PlayerHealth, this, gameObject);
 
         m_FramerateCounter = FindObjectOfType<FramerateCounter>();
         DebugUtility.HandleErrorIfNullFindObject<FramerateCounter, InGameMenuManager>(m_FramerateCounter, this);
@@ -43,8 +39,6 @@ public class InGameMenuManager : MonoBehaviour
         shadowsToggle.isOn = QualitySettings.shadows != ShadowQuality.Disable;
         shadowsToggle.onValueChanged.AddListener(OnShadowsChanged);
 
-        invincibilityToggle.isOn = m_PlayerHealth.invincible;
-        invincibilityToggle.onValueChanged.AddListener(OnInvincibilityChanged);
 
         framerateToggle.isOn = m_FramerateCounter.uiText.gameObject.activeSelf;
         framerateToggle.onValueChanged.AddListener(OnFramerateCounterChanged);
@@ -125,10 +119,6 @@ public class InGameMenuManager : MonoBehaviour
         QualitySettings.shadows = newValue ? ShadowQuality.All : ShadowQuality.Disable;
     }
 
-    void OnInvincibilityChanged(bool newValue)
-    {
-        m_PlayerHealth.invincible = newValue;
-    }
 
     void OnFramerateCounterChanged(bool newValue)
     {
