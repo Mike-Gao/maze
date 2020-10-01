@@ -104,7 +104,6 @@
     <Compile Include="Assets\FPS\Scripts\ProjectileChargeParameters.cs" />
     <Compile Include="Assets\FPS\Scripts\ProjectileStandard.cs" />
     <Compile Include="Assets\FPS\Scripts\TakeScreenshot.cs" />
-    <Compile Include="Assets\FPS\Scripts\TemplateObject.cs" />
     <Compile Include="Assets\FPS\Scripts\TimedSelfDestruct.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\Compass.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\CompassElement.cs" />
@@ -112,7 +111,6 @@
     <Compile Include="Assets\FPS\Scripts\UI\CrosshairManager.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\DisplayMessage.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\DisplayMessageManager.cs" />
-    <Compile Include="Assets\FPS\Scripts\UI\FillBarColorChange.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\LoadSceneButton.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\MenuNavigation.cs" />
     <Compile Include="Assets\FPS\Scripts\UI\NotificationHUDManager.cs" />
