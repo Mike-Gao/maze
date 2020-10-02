@@ -24,6 +24,10 @@ public class MazeTile : MonoBehaviour
         
     }
 
+    public void generateMaze()
+    {
+
+    }
     public void deleteWall(int i)
     {
         switch(i)
