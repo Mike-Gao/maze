@@ -92,7 +92,6 @@
     <Compile Include="Assets\FPS\Scripts\ObjectiveReachPoint.cs" />
     <Compile Include="Assets\FPS\Scripts\OverheatBehavior.cs" />
     <Compile Include="Assets\FPS\Scripts\Path\MazeManager.cs" />
-    <Compile Include="Assets\FPS\Scripts\Path\MazeTile.cs" />
     <Compile Include="Assets\FPS\Scripts\Path\PathManager.cs" />
     <Compile Include="Assets\FPS\Scripts\Pickup.cs" />
     <Compile Include="Assets\FPS\Scripts\PlayerCharacterController.cs" />
