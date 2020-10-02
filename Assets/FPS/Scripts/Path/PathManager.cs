@@ -10,7 +10,6 @@ public class PathManager : MonoBehaviour
 
     public GameObject pathTile;
     public GameObject ammo;
-    public GameObject MazeTile;
     public static int tileScale = 3; //default tile size 3
     public List<Vector2Int> allpoints = new List<Vector2Int>();
     // Start is called before the first frame update
@@ -18,7 +17,6 @@ public class PathManager : MonoBehaviour
     {
         GeneratePath();
         GenerateAmmo();
-        GenerateMaze();
     }
 
 
@@ -38,12 +36,6 @@ public class PathManager : MonoBehaviour
     {
         // Spawn ammo on the generated path
         Instantiate(ammo, new Vector3(x, 0.1f, y), Quaternion.identity);
-    }
-
-    void SpawnRoom(int x, int y)
-    {
-        // Spawn ammo on the generated path
-        Instantiate(MazeTile, new Vector3(x, 0.1f, y), Quaternion.identity);
     }
 
     void GenerateAmmo()
@@ -90,7 +82,6 @@ public class PathManager : MonoBehaviour
 
     void GeneratePath()
     {
-        Random.InitState(System.Environment.TickCount);
         List<Vector2Int> visited = new List<Vector2Int>();
         int x = tileScale;
         int y = tileScale;
@@ -142,19 +133,6 @@ public class PathManager : MonoBehaviour
             }    
             i = Random.Range(0, GetAvailableDirection(x, y, visited).Count);
         }
-
-    }
-
-    void GenerateMaze()
-    {
-        for (int i = 0; i < 5; ++i)
-        {
-            for (int j = 0; j < 5; ++j)
-            {
-                SpawnRoom(14 + i * 10, -1 + j * 10);
-            }
-        }
-
 
     }
 

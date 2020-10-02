@@ -9,6 +9,9 @@ public class MazeTile : MonoBehaviour
     public GameObject SouthWall;
     public GameObject EastWall;
     public GameObject WestWall;
+
+    public int X { get; set; }
+    public int Y { get; set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +24,7 @@ public class MazeTile : MonoBehaviour
         
     }
 
-    void deleteWall(int i)
+    public void deleteWall(int i)
     {
         switch(i)
         { 

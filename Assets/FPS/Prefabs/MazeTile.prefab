@@ -52,6 +52,18 @@ MonoBehaviour:
   SouthWall: {fileID: 3341674118636272147}
   EastWall: {fileID: 3341674118153068776}
   WestWall: {fileID: 3341674118517123827}
+--- !u!114 &836383486796997454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832964234361569557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0914267284bd7468f8ac89253e1557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1260790624284070134
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -498,6 +510,12 @@ PrefabInstance:
 --- !u!4 &8325798365851899083 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4477206535605542485, guid: 509d754db50222f46b673c4778f267e4,
+    type: 3}
+  m_PrefabInstance: {fileID: 5596028334400211614}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &832964234361569557 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5054831612177943435, guid: 509d754db50222f46b673c4778f267e4,
     type: 3}
   m_PrefabInstance: {fileID: 5596028334400211614}
   m_PrefabAsset: {fileID: 0}
