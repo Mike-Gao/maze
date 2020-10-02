@@ -44,4 +44,5 @@ public class MazeTile : MonoBehaviour
         }
             
     }
+
 }

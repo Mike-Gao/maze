@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class MazeManager : MonoBehaviour
@@ -16,18 +17,60 @@ public class MazeManager : MonoBehaviour
     {
         
     }
-    void SpawnRoom(int x, int y)
-    {
-        // Spawn ammo on the generated path
-        Instantiate(tile, new Vector3(x, 0.1f, y), Quaternion.identity);
-    }
     void GenerateMaze()
     {
+        // Generate the initial maze
         MazeTile[,] maze = InitMaze();
-        maze[0, 4].deleteWall(1);
-        maze[4, 0].deleteWall(0);
+        // Start and finish
+        maze[0, 0].deleteWall(1);
+        maze[4, 4].deleteWall(0);
 
+        Vector2Int cur = new Vector2Int(0, 0);
+        Vector2Int end = new Vector2Int(4, 4);
+        while (cur != end)
+        {
 
+        }
+    }
+
+    /*int GenerateDirection(int x, int y, List<Vector2Int> visited)
+    {
+
+    }*/
+
+    void ConnectCell(MazeTile a, MazeTile b)
+    {
+        // A - B
+        if (b.X == a.X && b.Y > a.Y)
+        {
+
+            a.deleteWall(3);
+            b.deleteWall(2); 
+        }
+
+        // B - A
+        if (b.X == a.X && b.Y < a.Y)
+        {
+            a.deleteWall(2);
+            b.deleteWall(3);
+        }
+        // A
+        // |
+        // B
+        if (a.X < b.X && b.Y == a.Y)
+        {
+            a.deleteWall(0);
+            b.deleteWall(1);
+        }
+
+        // B
+        // |
+        // A
+        if (a.X > b.X && b.Y == a.Y)
+        {
+            a.deleteWall(1);
+            b.deleteWall(0);
+        }
     }
 
     MazeTile[,] InitMaze()
@@ -37,7 +80,7 @@ public class MazeManager : MonoBehaviour
         {
             for (int j = 0; j < 5; ++j)
             {
-                maze[i, j] = Instantiate(tile, new Vector3(14 + i * 10, 0, -42 + j * 10), Quaternion.identity);
+                maze[i, j] = Instantiate(tile, new Vector3(14 + i * 10, 0, -1 + j * 10), Quaternion.identity);
                 maze[i, j].X = i;
                 maze[i, j].Y = j;
             }
