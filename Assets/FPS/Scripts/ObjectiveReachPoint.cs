@@ -24,8 +24,9 @@ public class ObjectiveReachPoint : MonoBehaviour
 
         var player = other.GetComponent<PlayerCharacterController>();
         // test if the other collider contains a PlayerCharacterController, then complete
-        if (player != null)
+        if (player != null && FindObjectOfType<MazeManager>().IsDestroyed)
         {
+            // Reached the point and maze is destroyed
             m_Objective.CompleteObjective(string.Empty, string.Empty, "Objective complete : " + m_Objective.title);
 
             // destroy the transform, will remove the compass marker if it has one

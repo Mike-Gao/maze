@@ -19,26 +19,28 @@ public class MazeManager : MonoBehaviour
     List<Vector2Int> ToBranch = new List<Vector2Int>(); 
     // Path Vector, (x,y,dir) where x, y represents the coordinates and dir represents the direction
     List<Vector3Int> PathVector = new List<Vector3Int>();
+
+   	public bool IsDestroyed = false;
     // Start is called before the first frame update
+    public int scalar = 8;
     void Start()
     {
 
-        int scaler = 8;
 
         for (int x = 1; x < 6; x++)
         {
             for (int y = 1; y < 6; y++)
             {
             	// Create Floor Tile
-                visited[(x - 1) * 5 + y, 4] = Instantiate(FloorTile, new Vector3(x * scaler + 24, 0.1f, y * scaler + 12), Quaternion.identity);
+                visited[(x - 1) * 5 + y, 4] = Instantiate(FloorTile, new Vector3(x * scalar + 24, 0.1f, y * scalar + 12), Quaternion.identity);
                 // Back Wall
-                visited[(x - 1) * 5 + y, 0] = Instantiate(Wall, new Vector3(x * scaler + 24, 0.1f, y * scaler + 12), Quaternion.identity);
+                visited[(x - 1) * 5 + y, 0] = Instantiate(Wall, new Vector3(x * scalar + 24, 0.1f, y * scalar + 12), Quaternion.identity);
                 // Front Wall
-                visited[(x - 1) * 5 + y, 1] = Instantiate(Wall, new Vector3(x * scaler + 27, 0.1f, y * scaler + 12), Quaternion.identity);
+                visited[(x - 1) * 5 + y, 1] = Instantiate(Wall, new Vector3(x * scalar + 27, 0.1f, y * scalar + 12), Quaternion.identity);
                 // Crete Left Wall
-                visited[(x - 1) * 5 + y, 2] = Instantiate(Wall, new Vector3(x * scaler + 24, 0.1f, y * scaler + 12), Quaternion.Euler(0, 90, 0));
+                visited[(x - 1) * 5 + y, 2] = Instantiate(Wall, new Vector3(x * scalar + 24, 0.1f, y * scalar + 12), Quaternion.Euler(0, 90, 0));
                 // Create Right Wall
-                visited[(x - 1) * 5 + y, 3] = Instantiate(Wall, new Vector3(x * scaler + 24, 0.1f, y * scaler + 15), Quaternion.Euler(0, 90, 0));
+                visited[(x - 1) * 5 + y, 3] = Instantiate(Wall, new Vector3(x * scalar + 24, 0.1f, y * scalar + 15), Quaternion.Euler(0, 90, 0));
                 UnvisitedTile.Add(new Vector2Int(x, y));
             }
         }
@@ -52,40 +54,44 @@ public class MazeManager : MonoBehaviour
     }
 
     // Update is called once per frame
+    // Check whether the maze has been destroyed or not
     void Update()
     {
-    	for (int i = 1; i < PathList.Count; i++)
-    	{
-    		if(visited[(PathList[i].x / 8 - 1) * 5 + PathList[i].y / 8, 4] == null){
-    				Debug.Log("Destroyed");
-    		}
-    	}
+    	for(int k = 0; k < PathList.Count; k++)
+        { 
+        	// If the floor tile has been destroyed
+            if (visited[(((PathList[k].x / scalar) - 1) * 5) + (PathList[k].x / scalar), 4] == null)
+            {
+                Debug.Log("Destroyed");
+                // Set the destroy tag to true. We call this in Ammo and Maze Completion to check and make sure
+                IsDestroyed = true;
+            }
+        }
     }
 
 
     List<int> Direction(int x, int y, List<Vector2Int> p)
     {
-    	// Direction helper that's useful for navigating unvisited tiles. 
+    	// Direction helper that's useful for navigating Unvisited tiles. 
     	// Normally we pass in the PathList, but sometimes we may want to pass in those who have been visited but has not been branched
     	// CutDirFrontBack and CutDirLeftRight instruct the program to remove a certain direction. It is essentially used to prevent "loops"
         List<int> dir = new List<int>(){1,2,3,4};
-        int scaler = 8;
-        if (x == 5 * scaler || p.Contains(new Vector2Int(x + scaler, y)) || CutDirFrontBack[PathList.Count - 1].x == 1)
+        if (x == 5 * scalar || p.Contains(new Vector2Int(x + scalar, y)) || CutDirFrontBack[p.Count - 1].x == 1)
         {
         	// Cannot go forward
             dir.Remove(1);
         }
-        if (x == 1 * scaler || y == 1 * scaler || y == 5 * scaler || p.Contains(new Vector2Int(x - scaler, y)) || CutDirFrontBack[PathList.Count - 1].y == 1)
+        if (x == 1 * scalar || y == 1 * scalar || y == 5 * scalar || p.Contains(new Vector2Int(x - scalar, y)) || CutDirFrontBack[p.Count - 1].y == 1)
         {
         	// Cannot go Backward
             dir.Remove(2);
         }
-        if (y == 1 * scaler || x == 5 * scaler || x == 1 * scaler || p.Contains(new Vector2Int(x, y - scaler)) || CutDirLeftRight[PathList.Count - 1].x == 1)
+        if (y == 1 * scalar || x == 5 * scalar || x == 1 * scalar || p.Contains(new Vector2Int(x, y - scalar)) || CutDirLeftRight[p.Count - 1].x == 1)
         {
         	// Cannot go left
             dir.Remove(3);
         }
-        if (y == 5 * scaler || p.Contains(new Vector2Int(x, y + scaler)) || CutDirLeftRight[PathList.Count - 1].y == 1)
+        if (y == 5 * scalar || p.Contains(new Vector2Int(x, y + scalar))|| CutDirLeftRight[p.Count - 1].y == 1)
         {
         	// Cannot go right
             dir.Remove(4);
@@ -94,49 +100,73 @@ public class MazeManager : MonoBehaviour
 
         return dir;
     }
+
+    List<int> AvailableDirectionForUnvisited(int x, int y)
+    {
+        List<int> dir = new List<int>(){1,2,3,4};
+        if (x == 5 * scalar || ToBranch.Contains(new Vector2Int(x+scalar, y)))
+        {
+            dir.Remove(1);
+        }
+        if (x == 1 * scalar  || ToBranch.Contains(new Vector2Int(x-scalar,y)))
+        {
+            dir.Remove(2);
+        }
+        if (y == 1 * scalar ||ToBranch.Contains(new Vector2Int(x, y-scalar)))
+        {
+            dir.Remove(3);
+        }
+        if (y == 5 * scalar || ToBranch.Contains(new Vector2Int(x, y+scalar)))
+        {
+            dir.Remove(4);
+        }
+        
+        return dir;
+    }
+
     void Generate()
     {
-        int scaler = 8;
-        int x = scaler;
-        int y = scaler;
+        int x = scalar;
+        int y = scalar;
         CutDirFrontBack.Add(new Vector2Int(0, 0));
         CutDirLeftRight.Add(new Vector2Int(0, 0));
-        PathList.Add(new Vector2Int(scaler, scaler));
-        branch.Add(new Vector2Int(scaler, scaler));
+        PathList.Add(new Vector2Int(scalar, scalar));
+        branch.Add(new Vector2Int(scalar, scalar));
         UnvisitedTile.Remove(new Vector2Int(1, 1));
 
         int i = Random.Range(0, Direction(x, y, PathList).Count);
-        while (x != 5 * scaler || y != 5 * scaler)
+        while (x != 5 * scalar || y != 5 * scalar)
         {
             List<int> availableDirection = Direction(x, y, PathList);
+
             if (availableDirection.Count > 0)
             {
-            	i = Random.Range(0, availableDirection.Count);
-                CutDirFrontBack.Add(new Vector2Int(0, 0));
-				CutDirLeftRight.Add(new Vector2Int(0, 0));
+            	i = Random.Range(0, availableDirection.Count);    
 				if (availableDirection[i] == 1)
                 {
                     PathVector.Add(new Vector3Int(x, y, 1));
-                    x += scaler;
+                    x += scalar;
                 } 
                 else if (availableDirection[i] == 2)
                 {
                     PathVector.Add(new Vector3Int(x, y, 2));
-                    x -= scaler;
+                    x -= scalar;
                 }
                 else if (availableDirection[i] == 3)
                 {
                     PathVector.Add(new Vector3Int(x, y, 3));
-                    y -= scaler;
+                    y -= scalar;
                 }
                 else if (availableDirection[i] == 4)
                 {
                     PathVector.Add(new Vector3Int(x, y, 4));
-                    y += scaler;
+                    y += scalar;
                 }
+                CutDirFrontBack.Add(new Vector2Int(0, 0));
+				CutDirLeftRight.Add(new Vector2Int(0, 0));
                 PathList.Add(new Vector2Int(x, y));
                 branch.Add(new Vector2Int(x, y));
-                UnvisitedTile.Remove(new Vector2Int(x / scaler, y / scaler));
+                UnvisitedTile.Remove(new Vector2Int(x / scalar, y / scalar));
             }
             else
             {
@@ -144,7 +174,7 @@ public class MazeManager : MonoBehaviour
             	// Delete the latest from PathList and Branch.
                 PathList.Remove(new Vector2Int(x, y));
                 branch.Remove(new Vector2Int(x, y));
-                UnvisitedTile.Add(new Vector2Int(x / scaler, y / scaler));
+                UnvisitedTile.Add(new Vector2Int(x / scalar, y / scalar));
                 int last = PathList.Count;
                 CutDirFrontBack.RemoveAt(last);
                 CutDirLeftRight.RemoveAt(last);
@@ -158,7 +188,7 @@ public class MazeManager : MonoBehaviour
                     int NewY = CutDirLeftRight[last - 1].y;
                     CutDirLeftRight.RemoveAt(last - 1);
                     // Cannot turn left
-                    if (y - y1 == scaler)
+                    if (y - y1 == scalar)
                     {
                         CutDirLeftRight.Add(new Vector2Int(1, NewY));
                     }
@@ -172,7 +202,7 @@ public class MazeManager : MonoBehaviour
                 	int NewX = CutDirFrontBack[last - 1].x;
                     int NewY = CutDirFrontBack[last - 1].y;
                     CutDirFrontBack.RemoveAt(last - 1);
-                    if (x - x1 == scaler)
+                    if (x - x1 == scalar)
                     {
                         CutDirFrontBack.Add(new Vector2Int(NewX, 1));
                     }
@@ -185,65 +215,68 @@ public class MazeManager : MonoBehaviour
 
 
         }
+
+
         for (int k = 0; k < PathVector.Count; k++)
         {
         	// Generate the path
-            int Path_X = PathVector[k].x;
-            int Path_Y = PathVector[k].y;
+            int x_cor = PathVector[k].x;
+            int y_cor = PathVector[k].y;
             int dirChoose = PathVector[k].z;
             if (dirChoose == 1)
             {
             	// Front
-                Destroy(visited[(Path_X / scaler - 1) * 5 + Path_Y / scaler, 1]);
-        		Destroy(visited[(Path_X / scaler ) * 5 + Path_Y / scaler , 0]);
+                Destroy(visited[(x_cor/scalar - 1) * 5 + y_cor/scalar, 1]);
+        		Destroy(visited[(x_cor/scalar ) * 5 + y_cor/scalar , 0]);
             }
             if (dirChoose == 2)
             {
             	// Back
-                Destroy(visited[(x/scaler - 1) * 5 + y/scaler, 0]);
-        		Destroy(visited[(x/scaler - 2) * 5 + y/scaler , 1]);
+                Destroy(visited[(x_cor/scalar - 1) * 5 + y_cor/scalar, 0]);
+        Destroy(visited[(x_cor/scalar - 2) * 5 + y_cor/scalar , 1]);
             }
             if (dirChoose == 3)
             {
             	// Left
-                Destroy(visited[(Path_X / scaler - 1) * 5 + Path_Y/scaler, 2]);
-        		Destroy(visited[(Path_X / scaler - 1) * 5 + Path_Y/scaler - 1, 3]);
+                Destroy(visited[(x_cor / scalar - 1) * 5 + y_cor/scalar, 2]);
+        Destroy(visited[(x_cor / scalar -1) * 5 + y_cor/scalar-1, 3]);
     
             }
             if (dirChoose == 4)
             {
             	// Right
-                Destroy(visited[(Path_X / scaler - 1) * 5 + Path_Y / scaler, 3]);
-        		Destroy(visited[(Path_X / scaler - 1) * 5 + Path_Y / scaler + 1, 2]);
+                Destroy(visited[(x_cor / scalar - 1) * 5 + y_cor / scalar, 3]);
+        		Destroy(visited[(x_cor / scalar -1) * 5 + y_cor / scalar+1, 2]);
+    
             }
         }
 
     }
     
+
     void GenerateUnvisitedTile()
     {
-        int scaler = 8;
         int num = Random.Range(0, UnvisitedTile.Count);
-        int x = UnvisitedTile[num].x * scaler;
-        int y = UnvisitedTile[num].y * scaler;
+        int x = UnvisitedTile[num].x * scalar;
+        int y = UnvisitedTile[num].y * scalar;
         int size = UnvisitedTile.Count;
-        int i = Random.Range(0, Direction(x, y, ToBranch).Count);
+        int i = Random.Range(0,AvailableDirectionForUnvisited(x, y).Count);
 
         bool branchAttached = false;
         while (UnvisitedTile.Count != 0)
         {
             
-            if (Direction(x, y, ToBranch)[i] == 1)
+            if (AvailableDirectionForUnvisited(x, y)[i] == 1)
             {
             	// Opening a path forward, destroy the two corresponding walls
-                Destroy(visited[(x / scaler - 1) * 5 + y / scaler, 1]);
-        		Destroy(visited[(x / scaler) * 5 + y / scaler, 0]);
-                x += scaler;
+                Destroy(visited[(x / scalar - 1) * 5 + y / scalar, 1]);
+        		Destroy(visited[(x / scalar) * 5 + y / scalar, 0]);
+                x += scalar;
                 // Is it attached to a branch?
                 if (branch.Contains(new Vector2Int(x, y)))
                 {
                     branchAttached = true;
-                    branch.Add(new Vector2Int(x - scaler, y));
+                    branch.Add(new Vector2Int(x - scalar, y));
                     while (ToBranch.Count > 0)
                     {
                         Vector2Int trans = ToBranch[0];
@@ -254,23 +287,22 @@ public class MazeManager : MonoBehaviour
                 else
                 {
                 	// Not a part of a branch, so add to ToBranch List
-                    ToBranch.Add(new Vector2Int(x - scaler, y));
+                    ToBranch.Add(new Vector2Int(x - scalar, y));
                 }
-                UnvisitedTile.Remove(new Vector2Int(x / scaler - 1, y / scaler));
-                UnvisitedTile.Remove(new Vector2Int(x / scaler, y / scaler));
+                UnvisitedTile.Remove(new Vector2Int(x / scalar - 1, y / scalar));
 
             }
-            else if (Direction(x, y, ToBranch)[i] == 2)
+            else if (AvailableDirectionForUnvisited(x, y)[i] == 2)
             {
-                Destroy(visited[(x / scaler - 1) * 5 + y / scaler, 0]);
-        		Destroy(visited[(x / scaler - 2) * 5 + y / scaler, 1]);
-                x -= scaler;
+                Destroy(visited[(x / scalar - 1) * 5 + y / scalar, 0]);
+        		Destroy(visited[(x / scalar - 2) * 5 + y / scalar, 1]);
+                x -= scalar;
                 // does the branch contains itself?
                 if (branch.Contains(new Vector2Int(x, y)))
                 {
 
                     branchAttached = true;
-                    branch.Add(new Vector2Int(x + scaler, y));
+                    branch.Add(new Vector2Int(x + scalar, y));
                     // Attach all the positions to the Branch
                     while (ToBranch.Count > 0)
                     {
@@ -282,21 +314,20 @@ public class MazeManager : MonoBehaviour
                 else
                 {
                 	// Not attached to a branch, so addto ToBranch list
-                    ToBranch.Add(new Vector2Int(x + scaler, y));
+                    ToBranch.Add(new Vector2Int(x + scalar, y));
                 }
-                UnvisitedTile.Remove(new Vector2Int(x / scaler + 1, y / scaler));
-                UnvisitedTile.Remove(new Vector2Int(x / scaler, y / scaler));
+                UnvisitedTile.Remove(new Vector2Int(x / scalar + 1, y / scalar));
 
             }
-			else if (Direction(x, y, ToBranch)[i] == 3)
+			else if (AvailableDirectionForUnvisited(x, y)[i] == 3)
             {
-                Destroy(visited[(x / scaler - 1) * 5 + y / scaler, 2]);
-        		Destroy(visited[(x / scaler - 1) * 5 + y / scaler - 1, 3]);
-                y -= scaler;
+                Destroy(visited[(x / scalar - 1) * 5 + y / scalar, 2]);
+        		Destroy(visited[(x / scalar - 1) * 5 + y / scalar - 1, 3]);
+                y -= scalar;
                 if (branch.Contains(new Vector2Int(x, y)))
                 {
                     branchAttached = true;
-                    branch.Add(new Vector2Int(x, y + scaler));
+                    branch.Add(new Vector2Int(x, y + scalar));
                     while (ToBranch.Count > 0)
                     {
                         Vector2Int trans = ToBranch[0];
@@ -306,22 +337,21 @@ public class MazeManager : MonoBehaviour
                 }
                 else
                 {
-                    ToBranch.Add(new Vector2Int(x, y + scaler));
+                    ToBranch.Add(new Vector2Int(x, y + scalar));
                 }
-                UnvisitedTile.Remove(new Vector2Int(x / scaler, y / scaler + 1));
-                UnvisitedTile.Remove(new Vector2Int(x / scaler, y / scaler));
+                UnvisitedTile.Remove(new Vector2Int(x / scalar, y / scalar + 1));
             }
-            else if (Direction(x, y, ToBranch)[i] == 4)
+            else if (AvailableDirectionForUnvisited(x, y)[i] == 4)
             {
             	// Open a path to the right
-                Destroy(visited[(x / scaler - 1) * 5 + y / scaler, 3]);
-        		Destroy(visited[(x / scaler - 1) * 5 + y / scaler + 1, 2]);
-                y += scaler;
+                Destroy(visited[(x / scalar - 1) * 5 + y / scalar, 3]);
+        		Destroy(visited[(x / scalar - 1) * 5 + y / scalar + 1, 2]);
+                y += scalar;
                 // Is it attached to a branch?
                 if (branch.Contains(new Vector2Int(x, y)))
                 {
                     branchAttached = true;
-                    branch.Add(new Vector2Int(x, y - scaler));
+                    branch.Add(new Vector2Int(x, y - scalar));
                     while (ToBranch.Count > 0)
                     {
                         Vector2Int trans = ToBranch[0];
@@ -332,23 +362,22 @@ public class MazeManager : MonoBehaviour
                 else
                 {
                 	// Attach to ToBranch List
-                    ToBranch.Add(new Vector2Int(x, y - scaler));
+                    ToBranch.Add(new Vector2Int(x, y - scalar));
                 }
-                UnvisitedTile.Remove(new Vector2Int(x / scaler, y / scaler - 1));
-                UnvisitedTile.Remove(new Vector2Int(x / scaler, y / scaler));
+                UnvisitedTile.Remove(new Vector2Int(x / scalar, y / scalar - 1));
             }
 
             if (branchAttached == true && UnvisitedTile.Count != 0)
             {
                 num = Random.Range(0, UnvisitedTile.Count);
-                x = UnvisitedTile[num].x * scaler;
-                y = UnvisitedTile[num].y * scaler;
-                i = Random.Range(0, Direction(x, y, ToBranch).Count);
+                x = UnvisitedTile[num].x * scalar;
+                y = UnvisitedTile[num].y * scalar;
+                i = Random.Range(0, AvailableDirectionForUnvisited(x, y).Count);
                 branchAttached = false;
             }
             else
             {
-                i = Random.Range(0, Direction(x, y, ToBranch).Count);
+                i = Random.Range(0, AvailableDirectionForUnvisited(x, y).Count);
             }
 
         }

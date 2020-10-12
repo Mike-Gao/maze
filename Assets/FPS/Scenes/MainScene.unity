@@ -1000,7 +1000,7 @@ PrefabInstance:
     - target: {fileID: 2707800222142829391, guid: d401b602eddc4e449b385a053f012a4c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 76
+      value: 75.3
       objectReference: {fileID: 0}
     - target: {fileID: 2707800222142829391, guid: d401b602eddc4e449b385a053f012a4c,
         type: 3}
@@ -1010,7 +1010,7 @@ PrefabInstance:
     - target: {fileID: 2707800222142829391, guid: d401b602eddc4e449b385a053f012a4c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 52.3
+      value: 51.2
       objectReference: {fileID: 0}
     - target: {fileID: 2707800222142829391, guid: d401b602eddc4e449b385a053f012a4c,
         type: 3}
@@ -1360,6 +1360,7 @@ MonoBehaviour:
   FloorTile: {fileID: 2586967504729872886, guid: 509d754db50222f46b673c4778f267e4,
     type: 3}
   Wall: {fileID: 4548416285556944926, guid: 7ba64c0944716c24f911914e2e6af7a4, type: 3}
+  IsDestroyed: 0
 --- !u!4 &1320875942 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4345292717316176595, guid: d5920ec2e9589fa49af231931214586b,
@@ -2265,6 +2266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AmmoCount: {fileID: 45388139}
+  UsedAmmo: 0
 --- !u!1001 &2729281214225025847
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2784,6 +2786,11 @@ PrefabInstance:
     - target: {fileID: 319410335075788178, guid: c996b53e9f849234393d1e90f68d1679,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1315839542190839936, guid: c996b53e9f849234393d1e90f68d1679,
+        type: 3}
+      propertyPath: endSceneLoadDelay
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1315839542190839937, guid: c996b53e9f849234393d1e90f68d1679,
